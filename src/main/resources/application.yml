@@ -17,7 +17,44 @@ spring:
   datasource:
     url: jdbc:h2:~/data/parserpalce;FILE_LOCK=SOCKET;AUTO_SERVER=TRUE
     driver-class-name: org.h2.Driver
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: demo-spring-client
+            authorization-grant-type: authorization_code
+            scope:
+              - openid
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8980/realms/CB_REALM
+            user-name-attribute: preferred_username
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8980/realms/CB_REALM
 
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  metrics:
+    enable:
+      http: false
+      hikaricp: false
+
+
+
+
+
+keycloak:
+  auth-server-url: 'http://localhost:8980/auth'
+  realm: 'CB_REALM'
+  resource: 'demo-spring-client'
+  public-client: true
 
 
 
